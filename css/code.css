@@ -1,0 +1,33 @@
+/* 
+ * 自己定义的样式 
+ */
+
+/* 
+ *	登陆页面放到浏览器中间的样式logincenter
+ */
+.logincenter{
+	width:450px;
+	position: fixed;/* 固定窗口 */
+	left: 50%; 
+	top: 50%;
+	margin-left: -255;/* 所有边框 */
+	margin-top: -180;
+}
+
+/* 文件夹字体图标大小 */
+.fileicosstyle{
+	font-size: 17px;
+	margin-right: 10px;
+}
+
+/* Icon图标颜色 浅灰色 */
+.iconfontcolor{
+	color: #333333;
+	font-size: 14px;
+}
+
+/* 文件夹级文件字体颜色 */
+.filefontcolor{
+	color: black;
+	font-size: 14px;
+}
