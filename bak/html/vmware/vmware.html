@@ -1,0 +1,29 @@
+<div id="content"><p>由于Linux目前很热门，越来越多的人在学习Linux，但是买一台服务放家里来学习，实在是很浪费。那么如何解决这个问题？虚拟机软件是很好的选择，常用的虚拟机软件有VMware Workstations和VirtualBox等。在使用虚拟机软件的时候，很多初学者都会遇到很多问题，而VMware的网络连接问题是大家遇到最多问题之一。在学习交流群里面，几乎每天都会有同学问到这些问题，写这篇详解也是因为群里童鞋网络出故障，然后在帮他解决的过程中，对自己的理解也做一个总结。接下来，我们就一起来探讨一下关于VMware Workstations网络连接的三种模式。</p>
+                                <p>vmware为我们提供了三种网络工作模式，它们分别是：<strong>Bridged（桥接模式）</strong>、<strong>NAT（网络地址转换模式）</strong>、<strong>Host-Only（仅主机模式）</strong>。</p>
+                                <p>打开vmware虚拟机，我们可以在选项栏的&ldquo;编辑&rdquo;下的&ldquo;虚拟网络编辑器&rdquo;中看到VMnet0（桥接模式）、VMnet1（仅主机模式）、VMnet8（NAT模式），那么这些都是有什么作用呢？其实，我们现在看到的VMnet0表示的是用于桥接模式下的虚拟交换机；VMnet1表示的是用于仅主机模式下的虚拟交换机；VMnet8表示的是用于NAT模式下的虚拟交换机。</p>
+                                <p><img class="img-responsive" title="" src="../../img/vmware/1.png" alt="虚拟网络编辑器" /></p>
+                                <p>同时，在主机上对应的有VMware Network Adapter VMnet1和VMware Network Adapter VMnet8两块虚拟网卡，它们分别作用于仅主机模式与NAT模式下。在&ldquo;网络连接&rdquo;中我们可以看到这两块虚拟网卡，如果将这两块卸载了，可以在vmware的&ldquo;编辑&rdquo;下的&ldquo;虚拟网络编辑器&rdquo;中点击&ldquo;还原默认设置&rdquo;，可重新将虚拟网卡还原。</p>
+                                <p><img class="img-responsive" title="" src="../../img/vmware/2.png" alt="还原默认设置" /></p>
+                                <p>小伙伴看到这里，肯定有疑问，为什么在真机上没有VMware Network Adapter VMnet0虚拟网卡呢？那么接下来，我们就一起来看一下这是为什么。</p>
+                                <h3 id="一bridged桥接模式">一、Bridged（桥接模式）</h3>
+                                <p>什么是桥接模式？桥接模式就是将主机网卡与虚拟机虚拟的网卡利用虚拟网桥进行通信。在桥接的作用下，类似于把物理主机虚拟为一个交换机，所有桥接设置的虚拟机连接到这个交换机的一个接口上，物理主机也同样插在这个交换机当中，所以所有桥接下的网卡与网卡都是交换模式的，相互可以访问而不干扰。在桥接模式下，虚拟机ip地址需要与主机在同一个网段，如果需要联网，则网关与DNS需要与主机网卡一致。其网络结构如下图所示：</p>
+                                <p><img class="img-responsive" title="" src="../../img/vmware/3.png" alt="桥接模式" /></p>
+                                <p>接下来，我们就来实际操作，如何设置桥接模式。</p>
+                                <p>首先，安装完系统之后，在开启系统之前，点击&ldquo;编辑虚拟机设置&rdquo;来设置网卡模式。</p>
+                                <p><img class="img-responsive" title="" src="../../img/vmware/4.png" alt="设置网卡模式" /></p>
+                                <p>点击&ldquo;网络适配器&rdquo;，选择&ldquo;桥接模式&rdquo;，然后&ldquo;确定&rdquo;</p>
+                                <p><img class="img-responsive" title="" src="../../img/vmware/5.png" alt="网络适配器" /></p>
+                                <p>在进入系统之前，我们先确认一下主机的ip地址、网关、DNS等信息。</p>
+                                <p><img class="img-responsive" title="" src="../../img/vmware/6.png" alt="主机信息" /></p>
+                                <p>然后，进入系统编辑网卡配置文件，命令为vi /etc/sysconfig/network-scripts/ifcfg-eth0</p>
+                                <p><img class="img-responsive" title="" src="../../img/vmware/7.png" alt="编辑网卡配置文件" /></p>
+                                <p>添加内容如下：</p>
+                                <p><img class="img-responsive" title="" src="../../img/vmware/8.png" alt="添加内容" /></p>
+                                <p>编辑完成，保存退出，然后重启虚拟机网卡，使用ping命令ping外网ip，测试能否联网。</p>
+                                <p><img class="img-responsive" title="" src="../../img/vmware/9.png" alt="测试能否联网" /></p>
+                                <p>能ping通外网ip，证明桥接模式设置成功。</p>
+                                <p>那主机与虚拟机之间的通信是否正常呢？我们就用远程工具来测试一下。</p>
+                                <p><img class="img-responsive" title="" src="../../img/vmware/10.png" alt="远程工具测试" /></p>
+                                <p>主机与虚拟机通信正常。</p>
+                                <p>这就是桥接模式的设置步骤，相信大家应该学会了如何去设置桥接模式了。桥接模式配置简单，但如果你的网络环境是ip资源很缺少或对ip管理比较严格的话，那桥接模式就不太适用了。如果真是这种情况的话，我们该如何解决呢？接下来，我们就来认识vmware的另一种网络模式：NAT模式。</p>
+                                <p><span style="font-size: small;"><strong>更多详情见请继续阅读下一页的精彩内容</strong></span>： <a href="../../Linux/2016-09/135521p2.htm">http://www.linuxidc.com/Linux/2016-09/135521p2.htm</a></p><a href="http://www.linuxidc.com" target="_blank"><img src="/linuxfile/logo.gif" alt="linux" width="15" height="17" /></div>
