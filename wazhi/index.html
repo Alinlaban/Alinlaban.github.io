@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<style type="text/css">
+			#border{
+				border:2px solid hidden;
+			}
+			#mypicturetable img{
+				border-radius: 1em;
+				width: 100%;
+			}
+			#mybody{
+				border:2px solid hidden;
+				background-color: bisque;
+				margin: 0px;
+			}
+			#mydiv table{
+				height: 90px;
+				
+				margin: 0px auto;/*div中间居中*/
+				/*background-color: red;*/
+				/*table-layout:fixed;*/
+			}
+			.myhead{
+				text-align: center;
+				font-size: 4vw;
+				border:2px solid hidden;
+				width: 100%;
+			}
+			#mya{
+				width: 66px;
+				position: fixed;
+				bottom: 20px;
+				right: 22px;
+				font-size: 0;
+				line-height: 0;
+				z-index: 100;
+			}
+			.myfoot{
+				margin-top: 40px;
+				margin-bottom: 40px;
+				color: dimgray;
+			}
+		</style>
+	</head>
+	<body id="mybody">
+		<div class="myhead">PICTURE</div>
+		<div id="mydiv">
+			<!-- picture start -->
+			<table id="mypicturetable">
+				<!--<tr>
+					<th id="border">PTICTURE</th>
+				</tr>-->
+				<tr>
+					<td id="border"><img src="picture/1.jpg"></td>
+				</tr>
+				<tr>
+					<td id="border"><img src="picture/2.jpg"></td>
+				</tr>
+				<tr>
+					<td id="border"><img src="picture/3.jpg"></td>
+				</tr>
+				<tr>
+					<td id="border"><img src="picture/4.jpg"></td>
+				</tr>
+				<tr>
+					<td id="border"><img src="picture/5.jpg"></td>
+				</tr>
+				<tr>
+					<td id="border"><img src="picture/6.jpg"></td>
+				</tr>
+			</table>
+			<!-- picture end -->
+		</div>
+		<a id="mya" href="#"><button>返回</button></a>
+		<div class="myfoot">
+			<div style="text-align: center; border:2px solid hidden; width: 100%;">官方网站：www.taotaoshop.top</div>
+			<div style="text-align: center; border:2px solid hidden; width: 100%;">予&copy;87576654&nbsp;&nbsp;版权所有：娃子&nbsp;&nbsp;&nbsp;&nbsp;电话：0371-12345678</div>
+		</div>
+		</body>
+	
+</html>
